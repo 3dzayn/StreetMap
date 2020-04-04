@@ -1,4 +1,4 @@
-# Street Map Plugin for UE4 [4.22]
+# Street Map Plugin for UE4 [4.24]
 
 This plugin allows you to import **OpenStreetMap** XML data into your **Unreal Engine 4** project as a new StreetMap asset type.  You can use the example **Street Map Component** to render streets and buildings.
 
@@ -142,3 +142,6 @@ For bugs, please [file an issue](https://github.com/ue4plugins/StreetMap/issues)
 
 Finally, a **big thanks** to the [OpenStreetMap Foundation](http://wiki.osmfoundation.org/wiki/Main_Page) and the fantastic community who contribute map data and maintain the database.
 
+## Improvements (my little contribution)
+
+Expose properties and functions to BluePrint to be able to manipulate StreetMap data

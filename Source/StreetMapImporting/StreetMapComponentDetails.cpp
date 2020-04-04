@@ -1,8 +1,7 @@
 // Copyright 2017 Mike Fricker. All Rights Reserved.
 
-#include "StreetMapImporting.h"
-
 #include "StreetMapComponentDetails.h"
+#include "StreetMapImporting.h"
 
 #include "SlateBasics.h"
 #include "RawMesh.h"
@@ -14,11 +13,12 @@
 #include "IDetailsView.h"
 #include "IDetailCustomization.h"
 #include "AssetRegistryModule.h"
-#include "DlgPickAssetPath.h"
+#include "Windows/AllowWindowsPlatformTypes.h"
+#include "Editor/UnrealEd/Public/Dialogs/DlgPickAssetPath.h"
 #include "IDetailCustomization.h"
-#include "SNotificationList.h"
-#include "NotificationManager.h"
-#include "AssertionMacros.h"
+#include "Slate/Public/Widgets/Notifications/SNotificationList.h"
+#include "Slate/Public/Framework/Notifications/NotificationManager.h"
+#include "Core/Public/Misc/AssertionMacros.h"
 
 
 #include "StreetMapComponent.h"
@@ -167,7 +167,7 @@ void FStreetMapComponentDetails::CustomizeDetails(IDetailLayoutBuilder& DetailBu
 				.Font(FSlateFontInfo("Verdana", 8))
 			.Text(FText::FromString(NumVerticesToString))
 			]
-			+ SHorizontalBox::Slot()
+		+ SHorizontalBox::Slot()
 			.HAlign(HAlign_Left)
 			.VAlign(VAlign_Center)
 			[
@@ -175,14 +175,14 @@ void FStreetMapComponentDetails::CustomizeDetails(IDetailLayoutBuilder& DetailBu
 				.Font(FSlateFontInfo("Verdana", 8))
 			.Text(FText::FromString(NumTrianglesToString))
 			]
-			+ SHorizontalBox::Slot()
-				.HAlign(HAlign_Left)
-				.VAlign(VAlign_Center)
-				[
-					SNew(STextBlock)
-					.Font(FSlateFontInfo("Verdana", 8))
-				.Text(FText::FromString(CollisionStatusToString))
-				]
+		+ SHorizontalBox::Slot()
+			.HAlign(HAlign_Left)
+			.VAlign(VAlign_Center)
+			[
+				SNew(STextBlock)
+				.Font(FSlateFontInfo("Verdana", 8))
+			.Text(FText::FromString(CollisionStatusToString))
+			]
 			];
 	}
 
@@ -233,13 +233,13 @@ FReply FStreetMapComponentDetails::OnCreateStaticMeshAssetClicked()
 			// Materials to apply to new mesh
 			TArray<UMaterialInterface*> MeshMaterials = SelectedStreetMapComponent->GetMaterials();
 
-			
+
 			const TArray<FStreetMapVertex > RawMeshVertices = SelectedStreetMapComponent->GetRawMeshVertices();
 			const TArray< uint32 > RawMeshIndices = SelectedStreetMapComponent->GetRawMeshIndices();
 
 
 			// Copy verts
-			for (int32 VertIndex = 0; VertIndex < RawMeshVertices.Num();VertIndex++)
+			for (int32 VertIndex = 0; VertIndex < RawMeshVertices.Num(); VertIndex++)
 			{
 				RawMesh.VertexPositions.Add(RawMeshVertices[VertIndex].Position);
 			}
@@ -342,7 +342,7 @@ FReply FStreetMapComponentDetails::OnCreateStaticMeshAssetClicked()
 FReply FStreetMapComponentDetails::OnBuildMeshClicked()
 {
 
-	if(SelectedStreetMapComponent != nullptr)
+	if (SelectedStreetMapComponent != nullptr)
 	{
 		//
 		SelectedStreetMapComponent->BuildMesh();
@@ -370,10 +370,11 @@ FReply FStreetMapComponentDetails::OnClearMeshClicked()
 
 void FStreetMapComponentDetails::RefreshDetails()
 {
-	if(LastDetailBuilderPtr != nullptr)
+	if (LastDetailBuilderPtr != nullptr)
 	{
 		LastDetailBuilderPtr->ForceRefreshDetails();
 	}
 }
 
 #undef LOCTEXT_NAMESPACE
+

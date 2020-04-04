@@ -4,7 +4,7 @@
 #include "StreetMap.h"
 #include "Components/MeshComponent.h"
 #include "Interfaces/Interface_CollisionDataProvider.h"
-#include "StreetMapSceneProxy.h"
+#include "../StreetMapSceneProxy.h"
 #include "StreetMapComponent.generated.h"
 
 
@@ -14,7 +14,7 @@ class UBodySetup;
 /**
  * Component that represents a section of street map roads and buildings
  */
-UCLASS( meta=(BlueprintSpawnableComponent) , hidecategories = (Physics))
+UCLASS(meta = (BlueprintSpawnableComponent), hidecategories = (Physics))
 class STREETMAPRUNTIME_API UStreetMapComponent : public UMeshComponent, public IInterface_CollisionDataProvider
 {
 	GENERATED_BODY()
@@ -61,7 +61,7 @@ public:
 	}
 
 	/** Returns true, if the input PropertyName correspond to a collision property. */
-	bool IsCollisionProperty(const FName& PropertyName) const 
+	bool IsCollisionProperty(const FName& PropertyName) const
 	{
 		return PropertyName == TEXT("bGenerateCollision") || PropertyName == TEXT("bAllowDoubleSidedGeometry");
 	}
@@ -186,3 +186,4 @@ protected:
 		UMaterialInterface* StreetMapDefaultMaterial;
 
 };
+

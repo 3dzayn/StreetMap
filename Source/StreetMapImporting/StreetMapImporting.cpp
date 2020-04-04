@@ -2,7 +2,7 @@
 
 #include "StreetMapImporting.h"
 #include "StreetMapAssetTypeActions.h"
-#include "ModuleManager.h"
+#include "Modules/ModuleManager.h"
 #include "StreetMapStyle.h"
 #include "StreetMapComponentDetails.h"
 
@@ -20,16 +20,16 @@ public:
 };
 
 
-IMPLEMENT_MODULE( FStreetMapImportingModule, StreetMapImporting )
+IMPLEMENT_MODULE(FStreetMapImportingModule, StreetMapImporting)
 
 
 
 void FStreetMapImportingModule::StartupModule()
 {
 	// Register asset types
-	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>( "AssetTools" ).Get();
-	StreetMapAssetTypeActions = MakeShareable( new FStreetMapAssetTypeActions() );
-	AssetTools.RegisterAssetTypeActions( StreetMapAssetTypeActions.ToSharedRef() );
+	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+	StreetMapAssetTypeActions = MakeShareable(new FStreetMapAssetTypeActions());
+	AssetTools.RegisterAssetTypeActions(StreetMapAssetTypeActions.ToSharedRef());
 
 	// Initialize & Register StreetMap Style
 	FStreetMapStyle::Initialize();
@@ -44,10 +44,10 @@ void FStreetMapImportingModule::StartupModule()
 void FStreetMapImportingModule::ShutdownModule()
 {
 	// Unregister all the asset types that we registered
-	if( FModuleManager::Get().IsModuleLoaded( "AssetTools" ) )
+	if (FModuleManager::Get().IsModuleLoaded("AssetTools"))
 	{
-		IAssetTools& AssetTools = FModuleManager::GetModuleChecked<FAssetToolsModule>( "AssetTools" ).Get();
-		AssetTools.UnregisterAssetTypeActions( StreetMapAssetTypeActions.ToSharedRef() );
+		IAssetTools& AssetTools = FModuleManager::GetModuleChecked<FAssetToolsModule>("AssetTools").Get();
+		AssetTools.UnregisterAssetTypeActions(StreetMapAssetTypeActions.ToSharedRef());
 		StreetMapAssetTypeActions.Reset();
 	}
 
@@ -61,3 +61,4 @@ void FStreetMapImportingModule::ShutdownModule()
 		PropertyModule.NotifyCustomizationModuleChanged();
 	}
 }
+

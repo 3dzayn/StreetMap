@@ -1,7 +1,7 @@
 // Copyright 2017 Mike Fricker. All Rights Reserved.
 
 #include "StreetMapRuntime.h"
-#include "ModuleManager.h"
+#include "Modules/ModuleManager.h"
 
 
 class FStreetMapRuntimeModule : public IModuleInterface
@@ -16,7 +16,7 @@ public:
 };
 
 
-IMPLEMENT_MODULE( FStreetMapRuntimeModule, StreetMapRuntime )
+IMPLEMENT_MODULE(FStreetMapRuntimeModule, StreetMapRuntime)
 
 
 
@@ -28,4 +28,5 @@ void FStreetMapRuntimeModule::StartupModule()
 void FStreetMapRuntimeModule::ShutdownModule()
 {
 }
+
 

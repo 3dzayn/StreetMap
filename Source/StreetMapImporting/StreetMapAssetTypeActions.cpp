@@ -1,7 +1,8 @@
 // Copyright 2017 Mike Fricker. All Rights Reserved.
 
-#include "StreetMapImporting.h"
 #include "StreetMapAssetTypeActions.h"
+#include "StreetMapImporting.h"
+
 #include "StreetMap.h"
 #include "AssetData.h"
 
@@ -29,7 +30,7 @@ UClass* FStreetMapAssetTypeActions::GetSupportedClass() const
 
 void FStreetMapAssetTypeActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<class IToolkitHost> EditWithinLevelEditor)
 {
-	FSimpleAssetEditor::CreateEditor( EToolkitMode::Standalone, EditWithinLevelEditor, InObjects );
+	FSimpleAssetEditor::CreateEditor(EToolkitMode::Standalone, EditWithinLevelEditor, InObjects);
 }
 
 
@@ -56,11 +57,12 @@ void FStreetMapAssetTypeActions::GetResolvedSourceFilePaths(const TArray<UObject
 	for (auto* Asset : TypeAssets)
 	{
 		const auto* StreetMap = CastChecked<UStreetMap>(Asset);
-		if( !StreetMap->AssetImportData->GetFirstFilename().IsEmpty() )
+		if (!StreetMap->AssetImportData->GetFirstFilename().IsEmpty())
 		{
-			OutSourceFilePaths.Add( StreetMap->AssetImportData->GetFirstFilename() );
+			OutSourceFilePaths.Add(StreetMap->AssetImportData->GetFirstFilename());
 		}
 	}
 }
 
 #undef LOCTEXT_NAMESPACE
+

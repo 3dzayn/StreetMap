@@ -1,7 +1,9 @@
 // Copyright 2017 Mike Fricker. All Rights Reserved.
 
-#include "StreetMapRuntime.h"
+
 #include "StreetMapSceneProxy.h"
+#include "StreetMapRuntime.h"
+
 #include "StreetMapComponent.h"
 #include "Runtime/Engine/Public/SceneManagement.h"
 #include "Runtime/Renderer/Public/MeshPassProcessor.h"
@@ -87,9 +89,9 @@ void FStreetMapSceneProxy::InitResources()
 	BeginInitResource(&VertexFactory);
 }
 
-bool FStreetMapSceneProxy::MustDrawMeshDynamically( const FSceneView& View ) const
+bool FStreetMapSceneProxy::MustDrawMeshDynamically(const FSceneView& View) const
 {
-	return ( AllowDebugViewmodes() && View.Family->EngineShowFlags.Wireframe ) || IsSelected();
+	return (AllowDebugViewmodes() && View.Family->EngineShowFlags.Wireframe) || IsSelected();
 }
 
 
@@ -98,18 +100,18 @@ bool FStreetMapSceneProxy::IsInCollisionView(const FEngineShowFlags& EngineShowF
 	return  EngineShowFlags.CollisionVisibility || EngineShowFlags.CollisionPawn;
 }
 
-FPrimitiveViewRelevance FStreetMapSceneProxy::GetViewRelevance( const FSceneView* View ) const
+FPrimitiveViewRelevance FStreetMapSceneProxy::GetViewRelevance(const FSceneView* View) const
 {
 	FPrimitiveViewRelevance Result;
 	Result.bDrawRelevance = IsShown(View);
 	Result.bShadowRelevance = IsShadowCast(View);
-	
+
 	const bool bAlwaysHasDynamicData = false;
 
 	// Only draw dynamically if we're drawing in wireframe or we're selected in the editor
-	Result.bDynamicRelevance = MustDrawMeshDynamically( *View ) || bAlwaysHasDynamicData;
-	Result.bStaticRelevance = !MustDrawMeshDynamically( *View );
-	
+	Result.bDynamicRelevance = MustDrawMeshDynamically(*View) || bAlwaysHasDynamicData;
+	Result.bStaticRelevance = !MustDrawMeshDynamically(*View);
+
 	MaterialRelevance.SetPrimitiveViewRelevance(Result);
 	return Result;
 }
@@ -121,10 +123,10 @@ bool FStreetMapSceneProxy::CanBeOccluded() const
 }
 
 
-void FStreetMapSceneProxy::MakeMeshBatch( FMeshBatch& Mesh, class FMeshElementCollector& Collector, FMaterialRenderProxy* WireframeMaterialRenderProxyOrNull, bool bDrawCollision) const
+void FStreetMapSceneProxy::MakeMeshBatch(FMeshBatch& Mesh, class FMeshElementCollector& Collector, FMaterialRenderProxy* WireframeMaterialRenderProxyOrNull, bool bDrawCollision) const
 {
 	FMaterialRenderProxy* MaterialProxy = NULL;
-	if( WireframeMaterialRenderProxyOrNull != nullptr )
+	if (WireframeMaterialRenderProxyOrNull != nullptr)
 	{
 		MaterialProxy = WireframeMaterialRenderProxyOrNull;
 	}
@@ -139,7 +141,7 @@ void FStreetMapSceneProxy::MakeMeshBatch( FMeshBatch& Mesh, class FMeshElementCo
 			MaterialProxy = StreetMapComp->GetDefaultMaterial()->GetRenderProxy();
 		}
 	}
-	
+
 	FMeshBatchElement& BatchElement = Mesh.Elements[0];
 
 	BatchElement.IndexBuffer = &IndexBuffer32;
@@ -151,8 +153,8 @@ void FStreetMapSceneProxy::MakeMeshBatch( FMeshBatch& Mesh, class FMeshElementCo
 	//	BatchElement.PrimitiveUniformBuffer = CreatePrimitiveUniformBufferImmediate(GetLocalToWorld(), GetBounds(), GetLocalBounds(), true, UseEditorDepthTest());
 
 	FDynamicPrimitiveUniformBuffer& DynamicPrimitiveUniformBuffer = Collector.AllocateOneFrameResource<FDynamicPrimitiveUniformBuffer>();
-	DynamicPrimitiveUniformBuffer.Set(GetLocalToWorld(), GetLocalToWorld(), GetBounds(), GetLocalBounds(), true, false, UseEditorDepthTest());
-	BatchElement.PrimitiveUniformBufferResource = &DynamicPrimitiveUniformBuffer.UniformBuffer;	
+	DynamicPrimitiveUniformBuffer.Set(GetLocalToWorld(), GetLocalToWorld(), GetBounds(), GetLocalBounds(), true, false, true /*UseEditorDepthTest()*/, false);
+	BatchElement.PrimitiveUniformBufferResource = &DynamicPrimitiveUniformBuffer.UniformBuffer;
 
 	BatchElement.FirstIndex = 0;
 	const int IndexCount = IndexBuffer32.Indices.Num();
@@ -163,7 +165,7 @@ void FStreetMapSceneProxy::MakeMeshBatch( FMeshBatch& Mesh, class FMeshElementCo
 	Mesh.Type = PT_TriangleList;
 	Mesh.DepthPriorityGroup = SDPG_World;
 
-	
+
 }
 
 /*
@@ -176,7 +178,7 @@ void FStreetMapSceneProxy::DrawStaticElements( FStaticPrimitiveDrawInterface* PD
 		FMeshBatch MeshBatch;
 		MakeMeshBatch( MeshBatch, nullptr);
 		PDI->DrawMesh( MeshBatch, ScreenSize );
-		
+
 	}
 }
 */
@@ -206,7 +208,7 @@ void FStreetMapSceneProxy::GetDynamicMeshElements(const TArray<const FSceneView*
 				}
 
 				// Draw the mesh!
-				FMeshBatch& MeshBatch = Collector.AllocateMesh(); 
+				FMeshBatch& MeshBatch = Collector.AllocateMesh();
 				MakeMeshBatch(MeshBatch, Collector, WireframeMaterialRenderProxy, bCanDrawCollision);
 				Collector.AddMesh(ViewIndex, MeshBatch);
 			}
@@ -215,7 +217,8 @@ void FStreetMapSceneProxy::GetDynamicMeshElements(const TArray<const FSceneView*
 }
 
 
-uint32 FStreetMapSceneProxy::GetMemoryFootprint( void ) const
-{ 
-	return sizeof( *this ) + GetAllocatedSize();
+uint32 FStreetMapSceneProxy::GetMemoryFootprint(void) const
+{
+	return sizeof(*this) + GetAllocatedSize();
 }
+

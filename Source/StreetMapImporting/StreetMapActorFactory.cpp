@@ -2,9 +2,10 @@
 
 // Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
 
+#include "StreetMapActorFactory.h"
 #include "StreetMapImporting.h"
 #include "AssetData.h"
-#include "StreetMapActorFactory.h"
+
 #include "StreetMapActor.h"
 #include "StreetMapComponent.h"
 #include "StreetMap.h"
@@ -47,3 +48,4 @@ bool UStreetMapActorFactory::CanCreateActorFrom(const FAssetData& AssetData, FTe
 {
 	return (AssetData.IsValid() && AssetData.GetClass()->IsChildOf(UStreetMap::StaticClass()));
 }
+
